@@ -1,6 +1,76 @@
+:root {
+  --main-color: black;
+  --main-bg-color: white;
+
+  --dropdown-hook-border-color: #000;
+  --dropdown-hook-disabled-border-color: #bababa;
+  --dropdown-border-color: #bababa;
+
+  --modal-backdrop-bg-color: rgba(0, 0, 0, .2);
+  --modal-border-color: rgba(0, 0, 0, .2);
+  --modal-internal-border-color: #dee2e6;
+
+  --menu-active-item-bg-color: #eaeaea;
+}
+
+@import "node_modules/@bscop/react-dropdown/package/src/style.scss";
+@import "node_modules/@bscop/react-modal/package/src/style.scss";
+
 body {
   margin: 0;
   font-family: "Nunito", sans-serif;
   font-size: 16px;
   line-height: 24px;
+}
+
+.ui-menu.account-menu {
+  position: relative;
+  max-width: 240px;
+
+  [aria-haspopup="menu"] {
+    display: flex;
+    align-items: center;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+    position: relative;
+
+    .user-name,
+    .user-email {
+      display: block;
+      text-align: right;
+    }
+
+    .user-email {
+      color: #888;
+    }
+
+    .avatar {
+      border-radius: 100%;
+      max-width: 64px;
+      margin: 0;
+      margin-left: 10px;
+      padding: 0;
+    }
+
+    .dropdown-clue {
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: rgb(224, 224, 224) 0px 0px 0px 2px;
+      line-height: 0;
+      position: absolute;
+      right: -7px;
+
+      svg {
+        display: inline-block;
+        fill: currentcolor;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  [role="menu"] {
+    right: 18px;
+  }
 }

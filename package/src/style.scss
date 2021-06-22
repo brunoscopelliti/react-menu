@@ -1,3 +1,28 @@
-.label {
-  font-size: 1rem;
+.ui-menu {
+  [role="menuitem"] {
+    background: none;
+    border: 0;
+    box-sizing: border-box;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding: .1rem .75rem;
+    text-align: left;
+    text-decoration: none;
+    width: 100%;
+  }
+
+  [role="menuitem"]:focus,
+  [role="menuitem"]:hover {
+    background-color: var(--menu-active-item-bg-color, #eaeaea);
+    outline: 0;
+  }
+
+  [role="menuitem"] img,
+  [role="menuitem"] svg {
+    margin-right: .5rem;
+  }
 }
