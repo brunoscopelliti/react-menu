@@ -1,18 +1,80 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 
 import cssClass from "@bscop/css-class";
 
 import Dropdown from "@bscop/react-dropdown";
 
+const indexOf = [].indexOf;
+
 const Menu =
   (props) => {
     const { className, items, ...dropdownProps } = props;
 
+    const ref = useRef(null);
+
+    const onKeyDown =
+      (event) => {
+        switch (event.code) {
+          case "ArrowDown":
+          case "PageDown":
+            event.preventDefault();
+            // Activate next
+            {
+              const items = ref.current.querySelectorAll("[role='menuitem']");
+              const indexActiveItem = indexOf.call(items, document.activeElement);
+              if (indexActiveItem < 0) {
+                ref.current.querySelector("[role='menuitem']").focus();
+              } else if (indexActiveItem < items.length - 1) {
+                items[indexActiveItem + 1].focus();
+              }
+            }
+            break;
+          case "ArrowUp":
+          case "PageUp":
+            event.preventDefault();
+            // Activate prev
+            {
+              const items = ref.current.querySelectorAll("[role='menuitem']");
+              const indexActiveItem = indexOf.call(items, document.activeElement);
+              if (indexActiveItem < 0) {
+                ref.current.querySelector("[role='menuitem']").focus();
+              } else if (indexActiveItem > 0) {
+                items[indexActiveItem - 1].focus();
+              }
+            }
+            break;
+          case "End":
+            event.preventDefault();
+            // Activate last
+            {
+              const items = ref.current.querySelectorAll("[role='menuitem']");
+              const indexActiveItem = indexOf.call(items, document.activeElement);
+              if (indexActiveItem !== items.length - 1) {
+                items[items.length - 1].focus();
+              }
+            }
+            break;
+          case "Home":
+            event.preventDefault();
+            // Activate first
+            {
+              const items = ref.current.querySelectorAll("[role='menuitem']");
+              const indexActiveItem = indexOf.call(items, document.activeElement);
+              if (indexActiveItem !== 0) {
+                items[0].focus();
+              }
+            }
+            break;
+        }
+      };
+
     return (
       <Dropdown
+        ref={ref}
         className={cssClass("ui-menu", className)}
         {...dropdownProps}
+        onKeyDown={onKeyDown}
         role="menu"
       >
         {

@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import Menu from "./";
@@ -298,5 +298,107 @@ describe("Menu", () => {
     userEvent.click(document.body);
 
     expect(button).not.toHaveAttribute("aria-expanded");
+  });
+
+  it("navigates menuitem using keyboard", () => {
+    render(
+      <Menu
+        items={
+          [
+            [
+              {
+                href: "#account",
+                id: "account",
+                label: "Account",
+              },
+              {
+                href: "#preferences",
+                id: "preferences",
+                label: "Preferences",
+              },
+              {
+                href: "#billing",
+                id: "billing",
+                label: "Billing",
+              },
+            ],
+            [
+              {
+                id: "logout",
+                label: "Logout",
+                renderItem (baseProps) {
+                  return (
+                    <form action="/logout" method="post">
+                      <button {...baseProps} type="submit">
+                        Logout
+                      </button>
+                    </form>
+                  );
+                },
+              },
+            ],
+          ]
+        }
+        label="Toggle menu"
+      />
+    );
+
+    const button = screen.getByRole("button");
+
+    userEvent.click(button);
+
+    expect(button).toHaveAttribute("aria-expanded", "true");
+
+    const dropdownContent = screen.getByRole("menu");
+
+    fireEvent.keyDown(dropdownContent, { code: "ArrowDown" });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement).toHaveTextContent("Account");
+
+    fireEvent.keyDown(dropdownContent, { code: "ArrowDown" });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement).toHaveTextContent("Preferences");
+
+    fireEvent.keyDown(dropdownContent, { code: "ArrowUp" });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement).toHaveTextContent("Account");
+
+    fireEvent.keyDown(dropdownContent, { code: "ArrowUp" });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement).toHaveTextContent("Account");
+
+    fireEvent.keyDown(dropdownContent, { code: "Home" });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement).toHaveTextContent("Account");
+
+    fireEvent.keyDown(dropdownContent, { code: "End" });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement).toHaveTextContent("Logout");
+
+    fireEvent.keyDown(dropdownContent, { code: "End" });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement).toHaveTextContent("Logout");
+
+    fireEvent.keyDown(dropdownContent, { code: "ArrowDown" });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement).toHaveTextContent("Logout");
+
+    fireEvent.keyDown(dropdownContent, { code: "ArrowUp" });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement).toHaveTextContent("Billing");
+
+    fireEvent.keyDown(dropdownContent, { code: "Home" });
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(document.activeElement).toHaveTextContent("Account");
   });
 });
