@@ -16,11 +16,49 @@ npm i @bscop/react-menu
 ## Usage
 
 ```js
-import Component from "@bscop/react-menu";
+import Menu from "@bscop/react-menu";
 
 function App () {
   return (
-    <Component />
+    <Menu 
+      items={
+        [
+          [
+            {
+              href: "#account",
+              id: "account",
+              label: "Account",
+            },
+            {
+              href: "#preferences",
+              id: "preferences",
+              label: "Preferences",
+            },
+            {
+              href: "#billing",
+              id: "billing",
+              label: "Billing",
+            },
+          ],
+          [
+            {
+              id: "logout",
+              label: "Logout",
+              renderItem (baseProps) {
+                return (
+                  <form action="/logout" method="post">
+                    <button {...baseProps} type="submit">
+                      Logout
+                    </button>
+                  </form>
+                );
+              },
+            },
+          ],
+        ]
+      }
+      label="Menu"
+    />
   );
 }
 ```
