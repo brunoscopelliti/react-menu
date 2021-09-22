@@ -7,7 +7,7 @@
 
 Accessible menu (in React).
 
-[View in Storybook.](https://brunoscopelliti.github.io/react-menu)
+[View in Storybook](https://brunoscopelliti.github.io/react-menu).
 
 ## Install
 
