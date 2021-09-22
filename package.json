@@ -1,6 +1,6 @@
 {
   "name": "@bscop/react-menu",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Accessible menu (in React).",
   "main": "package/dist/index.js",
   "module": "package/dist/index.es.js",
